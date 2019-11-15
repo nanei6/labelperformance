@@ -11,5 +11,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('admin.home');
-
+    $router->resource('users', UserController::class);
+    $router->resource('projects', ProjectController::class);
+    $router->resource('user-project-day', UserProjectDayController::class);
 });
