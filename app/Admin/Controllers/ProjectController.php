@@ -26,7 +26,7 @@ class ProjectController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Project);
-
+        $grid->model()->where('status', '=', '未完成');
         $grid->column('id', __('Id'));
         $grid->column('name', __('项目名'));
         $grid->column('group_leaders', __('分管组长'))->display(function ($group_leaders) {
@@ -38,7 +38,6 @@ class ProjectController extends AdminController
         $grid->column('unit_price', __('单价'));
         $grid->column('total_revenue', __('总收入'));
         $grid->column('status', __('状态'));
-
 
 
         return $grid;
@@ -85,16 +84,16 @@ class ProjectController extends AdminController
         $form->decimal('unit_price', __('单价'));
         $form->decimal('total_revenue', __('总收入'));
 
-        $user_groups=User::select('name')->where(['type'=>'组长'])->get()->toArray();
-        $groups=[];
-        foreach ($user_groups as $user_group){
-            $groups[$user_group['name']]=$user_group['name'];
+        $user_groups = User::select('name')->where(['type' => '组长'])->get()->toArray();
+        $groups = [];
+        foreach ($user_groups as $user_group) {
+            $groups[$user_group['name']] = $user_group['name'];
         }
 
-        $form->multipleSelect('group_leaders','分管项目组长')->options($groups);
-        $status=[
-            '未完成'=>'未完成',
-            '已完成'=>'已完成'
+        $form->multipleSelect('group_leaders', '分管项目组长')->options($groups);
+        $status = [
+            '未完成' => '未完成',
+            '已完成' => '已完成'
         ];
         $form->select('status', __('状态'))->options($status)->required();
         return $form;
