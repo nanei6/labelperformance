@@ -25,11 +25,10 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User);
-
-        $grid->column('name', __('姓名'));
         $grid->column('employee_number', __('工号'));
-        $grid->column('group', __('组名'));
+        $grid->column('name', __('姓名'));
         $grid->column('type', __('类型'));
+        $grid->column('group', __('组名'));
         $grid->column('status', __('状态'));
         $grid->column('entry_time', __('入职时间'))->display(function ($entry_time) {
             return date('Y-m-d',strtotime($entry_time));
@@ -50,7 +49,6 @@ class UserController extends AdminController
         $show = new Show(User::findOrFail($id));
 
         $show->field('name', __('名字'));
-
         $show->field('employee_number', __('工号'));
         $show->field('group', __('组名'));
         $show->field('type', __('类型'));

@@ -14,4 +14,5 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('projects', ProjectController::class);
     $router->resource('user-project-day', UserProjectDayController::class);
+    $router->resource('cost', CostController::class);
 });

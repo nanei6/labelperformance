@@ -16,7 +16,7 @@ class ProjectController extends AdminController
      *
      * @var string
      */
-    protected $title = '未完成项目';
+    protected $title = '项目';
 
     /**
      * Make a grid builder.
@@ -26,7 +26,7 @@ class ProjectController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Project);
-        $grid->model()->where('status', '=', '未完成');
+//        $grid->model()->where('status', '=', '未完成');
         $grid->column('id', __('Id'));
         $grid->column('name', __('项目名'));
         $grid->column('group_leaders', __('分管组长'))->display(function ($group_leaders) {

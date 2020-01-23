@@ -73,27 +73,29 @@ class UserProjectDayController extends AdminController
         $form = new Form(new UserProjectDay);
 
         //
-        //组长只能添加自己的组员
-        $admin_name = Admin::user()->name;
-        $user_info = User::select(['name', 'employee_number'])->where(['group' => $admin_name, 'status' => '正常', 'type' => '组员'])->get()->toArray();
+        $user_info = User::select(['name', 'employee_number'])->where(['status' => '正常'])->get()->toArray();
         $employee_numbers = [];
         foreach ($user_info as $value) {
             $employee_numbers[$value['employee_number']] = $value['name'];
         }
-        $form->select('employee_number', __('选择组员'))->options($employee_numbers);
+        $form->select('employee_number', __('选择成员'))->options($employee_numbers);
 
 
         //
-        //组长只能添加自己分管的未完成的项目
-        $projecrt_info = Project::select(['name', 'id'])->where('group_leaders', 'like', '%' . $admin_name . '%')->get()->toArray();
+        $projecrt_info = Project::select(['name', 'id'])->get()->toArray();
         $project_ids=[];
         foreach ($projecrt_info as $value){
             $project_ids[$value['id']]=$value['name'];
         }
-        $form->select('project_id', __('选择项目'))->options($project_ids);
-        $form->datetime('date', __('日期'))->format('YYYY-MM-DD');
-        $form->number('daily_standard', __('日标准量'));
-        $form->number('daily_label', __('日标注量'));
+        //项目默认上次填写
+        $default_project_id=UserProjectDay::select('project_id')->orderBy('id','desc')->first()->project_id;
+        $form->select('project_id', __('选择项目'))->options($project_ids)->default($default_project_id);
+        //日期默认今天
+        $form->datetime('date', __('日期'))->format('YYYY-MM-DD')->default(date('Y-m-d',time()));
+        //日标准量默认上次填写
+        $default_daily_standard=UserProjectDay::select('daily_standard')->orderBy('id','desc')->first()->daily_standard;
+        $form->number('daily_standard', __('日标准量'))->default($default_daily_standard);
+        $form->number('daily_label', __('日标注量'))->placeholder('请输入');
 
         return $form;
     }
