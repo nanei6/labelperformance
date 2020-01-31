@@ -38,6 +38,7 @@ class ProjectController extends AdminController
         $grid->column('unit_price', __('单价'));
         $grid->column('total_revenue', __('总收入'));
         $grid->column('status', __('状态'));
+        $grid->column('progress', __('进度'))->progressBar($style = 'primary', $size = 'sm', $max = 100);
 
 
         return $grid;
