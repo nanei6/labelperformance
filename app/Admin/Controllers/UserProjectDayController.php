@@ -89,6 +89,9 @@ class UserProjectDayController extends AdminController
         }
         //项目默认上次填写
         $default_project_id=UserProjectDay::select('project_id')->orderBy('id','desc')->first()->project_id;
+        if($default_project_id==null){
+            $default_project_id=1;
+        }
         $form->select('project_id', __('选择项目'))->options($project_ids)->default($default_project_id);
         //日期默认今天
         $form->datetime('date', __('日期'))->format('YYYY-MM-DD')->default(date('Y-m-d',time()));
