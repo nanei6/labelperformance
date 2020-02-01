@@ -88,18 +88,23 @@ class UserProjectDayController extends AdminController
             $project_ids[$value['id']]=$value['name'];
         }
         //项目默认上次填写
-        $user_project_day=UserProjectDay::select('project_id')->orderBy('id','desc')->first();
-        if($user_project_day==null){
+        $user_project_day_1=UserProjectDay::select('project_id')->orderBy('id','desc')->first();
+        if($user_project_day_1==null){
             $default_project_id=1;
     }else{
-            $default_project_id=$user_project_day->project_id;
+            $default_project_id=$user_project_day_1->project_id;
         }
-
         $form->select('project_id', __('选择项目'))->options($project_ids)->default($default_project_id);
         //日期默认今天
         $form->datetime('date', __('日期'))->format('YYYY-MM-DD')->default(date('Y-m-d',time()));
         //日标准量默认上次填写
-        $default_daily_standard=UserProjectDay::select('daily_standard')->orderBy('id','desc')->first()->daily_standard;
+        $user_project_day_2=UserProjectDay::select('daily_standard')->orderBy('id','desc')->first();
+        if($user_project_day_2==null){
+            $default_daily_standard=0;
+        }else{
+            $default_daily_standard=$user_project_day_2->daily_standard;
+        }
+
         $form->number('daily_standard', __('日标准量'))->default($default_daily_standard);
         $form->number('daily_label', __('日标注量'))->placeholder('请输入');
 
