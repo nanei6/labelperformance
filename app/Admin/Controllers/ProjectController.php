@@ -29,9 +29,12 @@ class ProjectController extends AdminController
 //        $grid->model()->where('status', '=', '未完成');
         $grid->column('id', __('Id'));
         $grid->column('name', __('项目名'));
-        $grid->column('group_leaders', __('分管组长'))->display(function ($group_leaders) {
-            return implode(',', $group_leaders);
-        });
+//        $grid->column('group_leaders', __('分管组长'))->display(function ($group_leaders) {
+//            return implode(',', $group_leaders);
+//        });
+        $grid->column('group_leaders', __('分管组长'))->label();
+        $grid->column('checkers', __('审核员'))->label();
+        $grid->column('manager', __('项目经理'))->label();
         $grid->column('start_time', __('开始时间'));
         $grid->column('estimated_time', __('预计完成时间'));
         $grid->column('finish_time', __('实际完成时间'));
@@ -58,6 +61,9 @@ class ProjectController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('项目名称'));
+        $show->field('group_leaders', __('分管组长'))->label();
+        $show->field('checkers', __('审核员'))->label();
+        $show->field('manager', __('项目经理'))->label();
         $show->field('start_time', __('开始时间'));
         $show->field('estimated_time', __('预计完成时间'));
         $show->field('finish_time', __('实际完成时间'));
@@ -95,8 +101,18 @@ class ProjectController extends AdminController
         foreach ($user_groups as $user_group) {
             $groups[$user_group['name']] = $user_group['name'];
         }
-
         $form->multipleSelect('group_leaders', '分管项目组长')->options($groups);
+
+        //所有人都可以当审核员或项目经理
+        $users=User::select('name')->get()->toArray();
+        $users_option=[];
+        foreach ($users as $user) {
+            $users_option[$user['name']] = $user['name'];
+        }
+        $form->multipleSelect('checkers', '审核员')->options($groups);
+        $form->multipleSelect('manager', '项目经理')->options($users_option);
+
+
         $status = [
             '未完成' => '未完成',
             '已完成' => '已完成'

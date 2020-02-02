@@ -12,15 +12,34 @@ class Project extends Model
     protected $appends = ['progress','estimated_total_revenue'];
 
     public function getGroupLeadersAttribute($value)
-    {
-        return explode(',', $value);
-    }
+{
+    return explode(',', $value);
+}
 
     public function setGroupLeadersAttribute($value)
     {
         $this->attributes['group_leaders'] = implode(',', $value);
     }
 
+    public function getCheckersAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function setCheckersAttribute($value)
+    {
+        $this->attributes['checkers'] = implode(',', $value);
+    }
+
+    public function getManagerAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function setManagerAttribute($value)
+    {
+        $this->attributes['manager'] = implode(',', $value);
+    }
     public function getProgressAttribute()
     {
         //日项目完成量
