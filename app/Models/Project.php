@@ -9,7 +9,7 @@ class Project extends Model
 {
     protected $table='project';
 
-    protected $appends = ['progress'];
+    protected $appends = ['progress','estimated_total_revenue'];
 
     public function getGroupLeadersAttribute($value)
     {
@@ -38,6 +38,11 @@ class Project extends Model
         }
 
         return $rate;
+    }
+
+    public function getEstimatedTotalRevenueAttribute(){
+        return $this->estimated_count*$this->unit_price;
+
     }
 
     public function userProjectDay()

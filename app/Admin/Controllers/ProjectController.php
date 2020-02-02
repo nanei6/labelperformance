@@ -32,10 +32,12 @@ class ProjectController extends AdminController
         $grid->column('group_leaders', __('分管组长'))->display(function ($group_leaders) {
             return implode(',', $group_leaders);
         });
+        $grid->column('start_time', __('开始时间'));
         $grid->column('estimated_time', __('预计完成时间'));
         $grid->column('finish_time', __('实际完成时间'));
         $grid->column('estimated_count', __('预计总量'));
         $grid->column('unit_price', __('单价'));
+        $grid->column('estimated_total_revenue', __('预计总收入'));
         $grid->column('total_revenue', __('总收入'));
         $grid->column('status', __('状态'));
         $grid->column('progress', __('进度'))->progressBar($style = 'primary', $size = 'sm', $max = 100);
@@ -56,11 +58,13 @@ class ProjectController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('项目名称'));
+        $show->field('start_time', __('开始时间'));
         $show->field('estimated_time', __('预计完成时间'));
         $show->field('finish_time', __('实际完成时间'));
         $show->field('estimated_count', __('预计总量'));
         $show->field('summary', __('项目简介'));
         $show->field('unit_price', __('单价'));
+        $show->field('estimated_total_revenue', __('预计总收入'));
         $show->field('total_revenue', __('总收入'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('修改时间'));
@@ -78,6 +82,7 @@ class ProjectController extends AdminController
         $form = new Form(new Project);
 
         $form->text('name', __('项目名称'))->required();
+        $form->datetime('start_time', __('开始时间'))->required();
         $form->datetime('estimated_time', __('预计完成时间'))->required();
         $form->datetime('finish_time', __('实际完成时间'));
         $form->number('estimated_count', __('预计总量'))->required();
