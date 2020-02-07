@@ -8,6 +8,9 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Models\User;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Layout\Content;
+use Encore\Admin\Widgets\Table;
 
 class ProjectController extends AdminController
 {
@@ -55,6 +58,7 @@ class ProjectController extends AdminController
      * @param mixed $id
      * @return Show
      */
+    //详情页用show方法，detail弃用
     protected function detail($id)
     {
         $show = new Show(Project::findOrFail($id));
@@ -104,8 +108,8 @@ class ProjectController extends AdminController
         $form->multipleSelect('group_leaders', '分管项目组长')->options($groups);
 
         //所有人都可以当审核员或项目经理
-        $users=User::select('name')->get()->toArray();
-        $users_option=[];
+        $users = User::select('name')->get()->toArray();
+        $users_option = [];
         foreach ($users as $user) {
             $users_option[$user['name']] = $user['name'];
         }
@@ -120,4 +124,35 @@ class ProjectController extends AdminController
         $form->select('status', __('状态'))->options($status)->required();
         return $form;
     }
+
+
+//    public function show($id, Content $content)
+//    {
+//
+//        // 选填
+//        $content->header('项目详情');
+//
+//        // 选填
+//        $content->description('');
+//
+//        // 添加面包屑导航 since v1.5.7
+//        $content->breadcrumb(
+//            ['text' => '首页', 'url' => '/'],
+//            ['text' => '项目', 'url' => '/projects'],
+//            ['text' => '项目详情']
+//        );
+//
+////        // 填充页面body部分，这里可以填入任何可被渲染的对象
+////        $content->body('<b>hello world</b>');
+//
+//
+//        //数据
+//
+//
+//
+//        // 直接渲染视图输出，Since v1.6.12
+//        $content->view('projectdetail', ['data' => 'foo']);
+//
+//        return $content;
+//    }
 }

@@ -34,6 +34,7 @@ class UserProjectDayController extends AdminController
         $grid->column('date', __('日期'))->display(function ($date) {
             return date('Y-m-d', strtotime($date));
         });
+        $grid->column('workload', __('日工作量'));
         $grid->column('daily_standard', __('日标注标准量'));
         $grid->column('daily_label', __('日标注量'));
         $grid->column('standard_check', __('日审核标准量'));
@@ -57,6 +58,7 @@ class UserProjectDayController extends AdminController
         $show->field('employee_number', __('工号'));
         $show->field('project_id', __('项目ID'));
         $show->field('date', __('日期'));
+        $show->field('workload', __('日工作量'));
         $show->field('daily_standard', __('日标注标准量'));
         $show->field('daily_label', __('日标注量'));
         $show->field('standard_check', __('日审核标准量'));
@@ -110,6 +112,8 @@ class UserProjectDayController extends AdminController
         //日期默认今天
         $form->datetime('date', __('日期'))->format('YYYY-MM-DD')->default(date('Y-m-d',time()));
 
+       //日工作量默认1
+        $form->decimal('workload',__('日工作量(0.1-1)'))->default(1);
 
 
         //日标准量默认上次填写
