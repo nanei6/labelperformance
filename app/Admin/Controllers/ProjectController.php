@@ -42,7 +42,10 @@ class ProjectController extends AdminController
         $grid->column('estimated_time', __('预计完成时间'));
         $grid->column('finish_time', __('实际完成时间'));
         $grid->column('estimated_count', __('预计总量'));
+        $grid->column('accepted_count', __('入库量'));
         $grid->column('unit_price', __('单价'));
+        $grid->column('label_unit_price', __('标注单价'));
+        $grid->column('check_unit_price', __('审核单价'));
         $grid->column('estimated_total_revenue', __('预计总收入'));
         $grid->column('total_revenue', __('总收入'));
         $grid->column('status', __('状态'));
@@ -58,7 +61,7 @@ class ProjectController extends AdminController
      * @param mixed $id
      * @return Show
      */
-    //详情页用show方法，detail弃用
+    //详情页用show方法，detail弃用;如需启动记得补充字段
     protected function detail($id)
     {
         $show = new Show(Project::findOrFail($id));
@@ -96,8 +99,11 @@ class ProjectController extends AdminController
         $form->datetime('estimated_time', __('预计完成时间'))->required();
         $form->datetime('finish_time', __('实际完成时间'));
         $form->number('estimated_count', __('预计总量'))->required();
+        $form->number('accepted_count', __('入库量'));
         $form->text('summary', __('项目简介'));
         $form->decimal('unit_price', __('单价'));
+        $form->decimal('label_unit_price', __('标注单价'));
+        $form->decimal('check_unit_price', __('审核单价'));
         $form->decimal('total_revenue', __('总收入'));
 
         $user_groups = User::select('name')->where(['type' => '组长'])->get()->toArray();
