@@ -125,10 +125,10 @@ class UserProjectDayController extends AdminController
             $default_check_standard=$user_project_day->standard_check;
         }
         $form->number('daily_standard', __('日标注标准量'))->default($default_daily_standard);
-        $form->number('daily_label', __('日标注量'))->placeholder('请输入');
+        $form->number('daily_label', __('日标注量'))->default(0);
 
         $form->number('standard_check', __('日审核标准量'))->default($default_check_standard);
-        $form->number('daily_check', __('日审核量'))->placeholder('请输入');
+        $form->number('daily_check', __('日审核量'))->default(0);
 
         return $form;
     }
