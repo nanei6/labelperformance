@@ -38,4 +38,12 @@ class User extends Model
     {
         return $this->hasMany(UserProjectDay::class,'employee_number','employee_number');
     }
+
+    public function getEntryTimeAttribute($value)
+    {
+        return date('Y-m-d',strtotime($value));
+    }
+
+
+
 }
