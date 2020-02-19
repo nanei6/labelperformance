@@ -39,6 +39,17 @@ class Project extends Model
     public function setManagerAttribute($value)
     {
         $this->attributes['manager'] = implode(',', $value);
+
+    }
+
+    public function getSpeedTestAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function setSpeedTestAttribute($value)
+    {
+        $this->attributes['speed_test'] = implode(',', $value);
     }
     public function getProgressAttribute()
     {
