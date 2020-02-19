@@ -172,7 +172,9 @@ class ProjectController extends AdminController
         $start_time = strtotime($project_data['start_time']);
         $estimated_time = strtotime($project_data['estimated_time']);
         $now = time();
+        if ($estimated_time<=$start_time){$time_progress=0 . '%';}else{
         $time_progress = round(($now - $start_time) / ($estimated_time - $start_time), 3);
+        }
         $time_progress = $time_progress * 100 . '%';
         //标注进度
         $estimated_count = $project_data['estimated_count'];
