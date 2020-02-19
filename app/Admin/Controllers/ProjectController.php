@@ -102,7 +102,7 @@ class ProjectController extends AdminController
         $form->datetime('start_time', __('开始时间'))->required();
         $form->datetime('estimated_time', __('预计完成时间'))->required();
         $form->datetime('finish_time', __('实际完成时间'));
-        $form->text('source', __('项目来源'));
+        $form->text('source', __('项目来源'))->required();
         $form->decimal('accuracy_rate', __('准确率要求'))->required();
         $form->number('estimated_count', __('预计总量'))->required();
         $form->number('accepted_count', __('入库量'));
