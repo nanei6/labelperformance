@@ -172,8 +172,10 @@ class ProjectController extends AdminController
         $start_time = strtotime($project_data['start_time']);
         $estimated_time = strtotime($project_data['estimated_time']);
         $now = time();
-        if ($estimated_time<=$start_time){$time_progress=0 . '%';}else{
-        $time_progress = round(($now - $start_time) / ($estimated_time - $start_time), 3);
+        if ($estimated_time <= $start_time) {
+            $time_progress = 0;
+        } else {
+            $time_progress = round(($now - $start_time) / ($estimated_time - $start_time), 3);
         }
         $time_progress = $time_progress * 100 . '%';
         //标注进度
@@ -208,7 +210,7 @@ class ProjectController extends AdminController
             ['name' => '总标注量', 'date1' => $daily_total[$last_two_weeks[0]]['sum'], 'date2' => $daily_total[$last_two_weeks[1]]['sum'], 'date3' => $daily_total[$last_two_weeks[2]]['sum'], 'date4' => $daily_total[$last_two_weeks[3]]['sum'], 'date5' => $daily_total[$last_two_weeks[4]]['sum'], 'date6' => $daily_total[$last_two_weeks[5]]['sum'], 'date7' => $daily_total[$last_two_weeks[6]]['sum'], 'date8' => $daily_total[$last_two_weeks[7]]['sum'], 'date9' => $daily_total[$last_two_weeks[8]]['sum'], 'date10' => $daily_total[$last_two_weeks[9]]['sum'], 'date11' => $daily_total[$last_two_weeks[10]]['sum'], 'date12' => $daily_total[$last_two_weeks[11]]['sum']]];
 //        dd($daily_total_format);
         // 直接渲染视图输出，Since v1.6.12
-        $content->view('projectdetail', ['project_data' => $project_data, 'time_progress' => $time_progress, 'label_progress' => $label_progress, 'check_progress' => $check_progress, 'last_two_weeks' => $last_two_weeks,'daily_total_format'=>$daily_total_format]);
+        $content->view('projectdetail', ['project_data' => $project_data, 'time_progress' => $time_progress, 'label_progress' => $label_progress, 'check_progress' => $check_progress, 'last_two_weeks' => $last_two_weeks, 'daily_total_format' => $daily_total_format]);
 
         return $content;
     }
