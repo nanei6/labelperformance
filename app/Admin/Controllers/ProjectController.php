@@ -101,9 +101,9 @@ class ProjectController extends AdminController
         $form->number('estimated_count', __('预计总量'))->required();
         $form->number('accepted_count', __('入库量'));
         $form->text('summary', __('项目简介'));
-        $form->decimal('unit_price', __('单价'));
-        $form->decimal('label_unit_price', __('标注单价'));
-        $form->decimal('check_unit_price', __('审核单价'));
+        $form->decimal('unit_price', __('单价'))->required();
+        $form->decimal('label_unit_price', __('标注单价'))->required();
+        $form->decimal('check_unit_price', __('审核单价'))->required();
         $form->decimal('total_revenue', __('总收入'));
 
         $user_groups = User::select('name')->where(['type' => '组长'])->get()->toArray();
@@ -132,33 +132,33 @@ class ProjectController extends AdminController
     }
 
 
-//    public function show($id, Content $content)
-//    {
-//
-//        // 选填
-//        $content->header('项目详情');
-//
-//        // 选填
-//        $content->description('');
-//
-//        // 添加面包屑导航 since v1.5.7
-//        $content->breadcrumb(
-//            ['text' => '首页', 'url' => '/'],
-//            ['text' => '项目', 'url' => '/projects'],
-//            ['text' => '项目详情']
-//        );
-//
-////        // 填充页面body部分，这里可以填入任何可被渲染的对象
-////        $content->body('<b>hello world</b>');
-//
-//
-//        //数据
-//
-//
-//
-//        // 直接渲染视图输出，Since v1.6.12
-//        $content->view('projectdetail', ['data' => 'foo']);
-//
-//        return $content;
-//    }
+    public function show($id, Content $content)
+    {
+
+        // 选填
+        $content->header('项目详情');
+
+        // 选填
+        $content->description('');
+
+        // 添加面包屑导航 since v1.5.7
+        $content->breadcrumb(
+            ['text' => '首页', 'url' => '/'],
+            ['text' => '项目', 'url' => '/projects'],
+            ['text' => '项目详情']
+        );
+
+//        // 填充页面body部分，这里可以填入任何可被渲染的对象
+//        $content->body('<b>hello world</b>');
+
+
+        //数据
+
+
+
+        // 直接渲染视图输出，Since v1.6.12
+        $content->view('projectdetail', ['data' => 'foo']);
+
+        return $content;
+    }
 }

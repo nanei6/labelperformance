@@ -196,24 +196,105 @@ class UserController extends AdminController
             }
             foreach ($last_two_weeks as $day) {
                 $temp2 = UserProjectDay::with('project')->where(['date' => $day, 'project_id' => $current_project_id])->first();
-                    if (empty($temp2)) {
-                        $performance[$name][$day]['daily_label'] = 0;
-                        $performance[$name][$day]['daily_check'] = 0;
-                        $performance[$name][$day]['output'] = 0;
-                    } else {
-                        $temp2 = $temp2->toArray();
-                        $performance[$name][$day]['daily_label'] = $temp2['daily_label'];
-                        $performance[$name][$day]['daily_check'] = $temp2['daily_check'];
-                        $performance[$name][$day]['output'] = $temp2['daily_label']*$temp2['project']['unit_price'];
-                    }
+                if (empty($temp2)) {
+                    $performance[$name][$day]['daily_label'] = 0;
+                    $performance[$name][$day]['daily_check'] = 0;
+                    $performance[$name][$day]['output'] = 0;
+                } else {
+                    $temp2 = $temp2->toArray();
+                    $performance[$name][$day]['daily_label'] = $temp2['daily_label'];
+                    $performance[$name][$day]['daily_check'] = $temp2['daily_check'];
+                    $performance[$name][$day]['output'] = $temp2['daily_label'] * $temp2['project']['unit_price'];
+                }
             }
 
-            //【本月情况】
+
+        }
+
+        //【上月情况】
+        //上月1日0点
+        $last_month_1st = date('Y-m-1', strtotime('-1 month', time()));
+        //本月1日0点
+        $this_month_1st = date('Y-m-1', time());
+        //上月此员工所有每日情况
+        $last_month_performance = UserProjectDay::where(['employee_number' => $employee_number])->where('date', '>=', $last_month_1st)->where('date', '<', $this_month_1st)->get()->toArray();
+        //dd($last_month_performance);
+        //上月此员工所有的项目id
+        $last_month_project_ids = [];
+        foreach ($last_month_performance as $value) {
+            $last_month_project_ids[] = $value['project_id'];
+        };
+        $last_month_project_ids = array_unique($last_month_project_ids);
+        //上月情况
+        $last_month = [];
+        foreach ($last_month_project_ids as $last_month_project_id) {
+            $temp3 = Project::where(['id' => $last_month_project_id])->first();
+            $last_month[] = ['id' => $last_month_project_id, 'name' => $temp3->name, 'unit_price' => $temp3->unit_price];
+        }
+        //dd($last_month);
+        foreach ($last_month as $key => $value) {
+            $last_month_label_number = 0;
+            $last_month_check_number = 0;
+            foreach ($last_month_performance as $v) {
+                if ($v['project_id'] == $value['id']) {
+                    $last_month_label_number += $v['daily_label'];
+                    $last_month_check_number += $v['daily_check'];
+                }
+            }
+            $last_month[$key]['label_number'] = $last_month_label_number;
+            $last_month[$key]['check_number'] = $last_month_check_number;
+
+        }
+        foreach ($last_month as $key => $value) {
+            $temp4 = Project::where(['id' => $value['id']])->first();
+            $last_month[$key]['output'] = $temp4->unit_price * $value['label_number'];
+            $last_month[$key]['salary'] = $temp4->label_unit_price * $value['label_number'] + $temp4->check_unit_price * $value['check_number'];
+        }
+
+
+        //【本月情况】
+        //本月今天0点
+        $this_month_today = date('Y-m-d', time());
+        //本月1日0点
+        $this_month_1st = date('Y-m-1', time());
+        //本月此员工所有每日情况
+        $this_month_performance = UserProjectDay::where(['employee_number' => $employee_number])->where('date', '>=', $this_month_1st)->where('date', '<=', $this_month_today)->get()->toArray();
+        //dd($this_month_performance);
+        //本月此员工所有的项目id
+        $this_month_project_ids = [];
+        foreach ($this_month_performance as $value) {
+            $this_month_project_ids[] = $value['project_id'];
+        };
+        $this_month_project_ids = array_unique($this_month_project_ids);
+        //本月情况
+        $this_month = [];
+        foreach ($this_month_project_ids as $this_month_project_id) {
+            $temp4 = Project::where(['id' => $this_month_project_id])->first();
+            $this_month[] = ['id' => $this_month_project_id, 'name' => $temp4->name, 'unit_price' => $temp4->unit_price];
+        }
+        //dd($this_month);
+        foreach ($this_month as $key => $value) {
+            $this_month_label_number = 0;
+            $this_month_check_number = 0;
+            foreach ($this_month_performance as $v) {
+                if ($v['project_id'] == $value['id']) {
+                    $this_month_label_number += $v['daily_label'];
+                    $this_month_check_number += $v['daily_check'];
+                }
+            }
+            $this_month[$key]['label_number'] = $this_month_label_number;
+            $this_month[$key]['check_number'] = $this_month_check_number;
+
+        }
+        foreach ($this_month as $key => $value) {
+            $temp4 = Project::where(['id' => $value['id']])->first();
+            $this_month[$key]['output'] = $temp4->unit_price * $value['label_number'];
+            $this_month[$key]['salary'] = $temp4->label_unit_price * $value['label_number'] + $temp4->check_unit_price * $value['check_number'];
         }
 
 //dd(json_encode($projectData));
 // 直接渲染视图输出，Since v1.6.12=================================
-        $content->view('employee_detail', ['employeeData' => $employeeData, 'current_project' => $current_project_str, 'projectData' => $projectData,'performance'=>$performance]);
+        $content->view('employee_detail', ['employeeData' => $employeeData, 'current_project' => $current_project_str, 'projectData' => $projectData, 'performance' => $performance, 'last_month' => $last_month,'this_month' => $this_month]);
 
         return $content;
     }

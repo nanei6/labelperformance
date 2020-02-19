@@ -100,74 +100,74 @@
     <!-- <div id="chart" style="width:100%;height:400px;"></div> -->
     <div>近两周表现情况</div>
     @foreach($performance as $key=>$value)
-    <el-row>
-        <el-table
-                :data="{{'a'.md5($key)}}"
-                border
-                stripe
-                style="width: 100%">
-            <el-table-column
-                    prop="name"
-                    label="{{$key}}"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="date1"
-                    label="{{array_keys($value)[0]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date2"
-                    label="{{array_keys($value)[1]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date3"
-                    label="{{array_keys($value)[2]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date4"
-                    label="{{array_keys($value)[3]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date5"
-                    label="{{array_keys($value)[4]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date6"
-                    label="{{array_keys($value)[5]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date7"
-                    label="{{array_keys($value)[6]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date8"
-                    label="{{array_keys($value)[7]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date9"
-                    label="{{array_keys($value)[8]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date10"
-                    label="{{array_keys($value)[9]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date11"
-                    label="{{array_keys($value)[10]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date12"
-                    label="{{array_keys($value)[11]}}">
-            </el-table-column>
-        </el-table>
-    </el-row>
-    </br>
-    @endforeach
-    </br>
+        <el-row>
+            <el-table
+                    :data="{{'a'.md5($key)}}"
+                    border
+                    stripe
+                    style="width: 100%">
+                <el-table-column
+                        prop="name"
+                        label="{{$key}}"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="date1"
+                        label="{{array_keys($value)[0]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date2"
+                        label="{{array_keys($value)[1]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date3"
+                        label="{{array_keys($value)[2]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date4"
+                        label="{{array_keys($value)[3]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date5"
+                        label="{{array_keys($value)[4]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date6"
+                        label="{{array_keys($value)[5]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date7"
+                        label="{{array_keys($value)[6]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date8"
+                        label="{{array_keys($value)[7]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date9"
+                        label="{{array_keys($value)[8]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date10"
+                        label="{{array_keys($value)[9]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date11"
+                        label="{{array_keys($value)[10]}}">
+                </el-table-column>
+                <el-table-column
+                        prop="date12"
+                        label="{{array_keys($value)[11]}}">
+                </el-table-column>
+            </el-table>
+        </el-row>
+        </br>
+        @endforeach
+        </br>
     <el-row>
         <div>本月情况（截止当前日期）</div>
         <el-table
-                :data="data"
+                :data="thisMonth"
                 border
                 stripe
                 style="width: 100%">
@@ -177,16 +177,16 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="markNum"
+                    prop="label_number"
                     label="标注量"
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="checkNum"
+                    prop="check_number"
                     label="审核量">
             </el-table-column>
             <el-table-column
-                    prop="outputValue"
+                    prop="output"
                     label="产值">
             </el-table-column>
             <el-table-column
@@ -199,7 +199,7 @@
     <el-row>
         <div>上月情况</div>
         <el-table
-                :data="data"
+                :data="lastMonth"
                 border
                 stripe
                 style="width: 100%">
@@ -209,16 +209,16 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="markNum"
+                    prop="label_number"
                     label="标注量"
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="checkNum"
+                    prop="check_number"
                     label="审核量">
             </el-table-column>
             <el-table-column
-                    prop="outputValue"
+                    prop="output"
                     label="产值">
             </el-table-column>
             <el-table-column
@@ -229,6 +229,7 @@
     </el-row>
 </div>
 </body>
+</html>
 <script>
     new Vue({
         el: '#app',
@@ -237,61 +238,57 @@
                 visible: false,
                 employeeData: [{!!json_encode($employeeData)!!} ],
                 projectData:{!!json_encode($projectData)!!} ,
-                data: [{
-                    name: '项目A',
-                    markNum: '100',
-                    checkNum: '100',
-                    outputValue: '100',
-                    salary: '10000'
-                }, {name: '项目B', markNum: '100', checkNum: '100', outputValue: '100', salary: '10000'}],
-                @foreach($performance as $key=>$value)
-            {{'a'.md5($key)}}: [{
-                    name: '标注量',
-                    date1: '{{array_values($value)[0]["daily_label"]}}',
-                    date2: '{{array_values($value)[1]["daily_label"]}}',
-                    date3: '{{array_values($value)[2]["daily_label"]}}',
-                    date4: '{{array_values($value)[3]["daily_label"]}}',
-                    date5: '{{array_values($value)[4]["daily_label"]}}',
-                    date6: '{{array_values($value)[5]["daily_label"]}}',
-                    date7: '{{array_values($value)[6]["daily_label"]}}',
-                    date8: '{{array_values($value)[7]["daily_label"]}}',
-                    date9: '{{array_values($value)[8]["daily_label"]}}',
-                    date10: '{{array_values($value)[9]["daily_label"]}}',
-                    date11: '{{array_values($value)[10]["daily_label"]}}',
-                    date12: '{{array_values($value)[11]["daily_label"]}}'
+                thisMonth: {!!json_encode($this_month)!!},
+                lastMonth: {!!json_encode($last_month)!!},
+            @foreach($performance as $key=>$value)
+            {{'a'.md5($key)}}:
+            [{
+                name: '标注量',
+                date1: '{{array_values($value)[0]["daily_label"]}}',
+                date2: '{{array_values($value)[1]["daily_label"]}}',
+                date3: '{{array_values($value)[2]["daily_label"]}}',
+                date4: '{{array_values($value)[3]["daily_label"]}}',
+                date5: '{{array_values($value)[4]["daily_label"]}}',
+                date6: '{{array_values($value)[5]["daily_label"]}}',
+                date7: '{{array_values($value)[6]["daily_label"]}}',
+                date8: '{{array_values($value)[7]["daily_label"]}}',
+                date9: '{{array_values($value)[8]["daily_label"]}}',
+                date10: '{{array_values($value)[9]["daily_label"]}}',
+                date11: '{{array_values($value)[10]["daily_label"]}}',
+                date12: '{{array_values($value)[11]["daily_label"]}}'
+            },
+             {
+                    name: '审核量',
+                    date1: '{{array_values($value)[0]["daily_check"]}}',
+                    date2: '{{array_values($value)[1]["daily_check"]}}',
+                    date3: '{{array_values($value)[2]["daily_check"]}}',
+                    date4: '{{array_values($value)[3]["daily_check"]}}',
+                    date5: '{{array_values($value)[4]["daily_check"]}}',
+                    date6: '{{array_values($value)[5]["daily_check"]}}',
+                    date7: '{{array_values($value)[6]["daily_check"]}}',
+                    date8: '{{array_values($value)[7]["daily_check"]}}',
+                    date9: '{{array_values($value)[8]["daily_check"]}}',
+                    date10: '{{array_values($value)[9]["daily_check"]}}',
+                    date11: '{{array_values($value)[10]["daily_check"]}}',
+                    date12: '{{array_values($value)[11]["daily_check"]}}'
                 },
-                    {
-                        name: '审核量',
-                        date1: '{{array_values($value)[0]["daily_check"]}}',
-                        date2: '{{array_values($value)[1]["daily_check"]}}',
-                        date3: '{{array_values($value)[2]["daily_check"]}}',
-                        date4: '{{array_values($value)[3]["daily_check"]}}',
-                        date5: '{{array_values($value)[4]["daily_check"]}}',
-                        date6: '{{array_values($value)[5]["daily_check"]}}',
-                        date7: '{{array_values($value)[6]["daily_check"]}}',
-                        date8: '{{array_values($value)[7]["daily_check"]}}',
-                        date9: '{{array_values($value)[8]["daily_check"]}}',
-                        date10: '{{array_values($value)[9]["daily_check"]}}',
-                        date11: '{{array_values($value)[10]["daily_check"]}}',
-                        date12: '{{array_values($value)[11]["daily_check"]}}'
-                    },
-                    {
-                        name: '产值',
-                        date1: '{{array_values($value)[0]["output"]}}',
-                        date2: '{{array_values($value)[1]["output"]}}',
-                        date3: '{{array_values($value)[2]["output"]}}',
-                        date4: '{{array_values($value)[3]["output"]}}',
-                        date5: '{{array_values($value)[4]["output"]}}',
-                        date6: '{{array_values($value)[5]["output"]}}',
-                        date7: '{{array_values($value)[6]["output"]}}',
-                        date8: '{{array_values($value)[7]["output"]}}',
-                        date9: '{{array_values($value)[8]["output"]}}',
-                        date10: '{{array_values($value)[9]["output"]}}',
-                        date11: '{{array_values($value)[10]["output"]}}',
-                        date12: '{{array_values($value)[11]["output"]}}'
-                    }],
+             {
+                    name: '产值',
+                    date1: '{{array_values($value)[0]["output"]}}',
+                    date2: '{{array_values($value)[1]["output"]}}',
+                    date3: '{{array_values($value)[2]["output"]}}',
+                    date4: '{{array_values($value)[3]["output"]}}',
+                    date5: '{{array_values($value)[4]["output"]}}',
+                    date6: '{{array_values($value)[5]["output"]}}',
+                    date7: '{{array_values($value)[6]["output"]}}',
+                    date8: '{{array_values($value)[7]["output"]}}',
+                    date9: '{{array_values($value)[8]["output"]}}',
+                    date10: '{{array_values($value)[9]["output"]}}',
+                    date11: '{{array_values($value)[10]["output"]}}',
+                    date12: '{{array_values($value)[11]["output"]}}'
+                }],
             @endforeach
-            }
+        }
         }
     })
 </script>
@@ -353,28 +350,4 @@ var options={
 };
 myChart.setOption(options);
 </script> -->
-</html>
-<script src="//unpkg.com/vue/dist/vue.js"></script>
-<script src="//unpkg.com/element-ui@2.13.0/lib/index.js"></script>
-<div id="app">
-    <template>
-        <el-table
-                :data="tableData"
-                style="width: 100%">
-            <el-table-column
-                    prop="date"
-                    label="日期"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="address"
-                    label="地址">
-            </el-table-column>
-        </el-table>
-    </template>
-</div>
+
