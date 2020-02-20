@@ -107,165 +107,203 @@
         </el-table>
     </el-row>
     </br>
-    时间进度：<div>{{$time_progress}}</div>
+    时间进度：
+    <div>{{$time_progress}}</div>
     <div class="progress" style="height:20px;">
         <div class="progress-bar" style="width:{{$time_progress}};"></div>
     </div>
     </br>
-    标注进度：<div>{{$label_progress}}</div>
-    </div><div class="progress" style="height:20px;">
-        <div class="progress-bar" style="width:{{$label_progress}};"></div>
-    </div>
-    </br>
-    审核进度：<div>{{$check_progress}}</div>
-    <div class="progress" style="height:20px;">
-        <div class="progress-bar" style="width:{{$label_progress}};"></div>
-    </div>
-    </br>
-    <el-row>
-        <div>标注量/天</div>
-        <el-table
-                :data="daily_total"
-                border
-                stripe
-                style="width: 100%">
-            <el-table-column
-                    prop="name"
-                    label="标注量/天"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="date1"
-                    label="{{$last_two_weeks[0]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date2"
-                    label="{{$last_two_weeks[1]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date3"
-                    label="{{$last_two_weeks[2]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date4"
-                    label="{{$last_two_weeks[3]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date5"
-                    label="{{$last_two_weeks[4]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date6"
-                    label="{{$last_two_weeks[5]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date7"
-                    label="{{$last_two_weeks[6]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date8"
-                    label="{{$last_two_weeks[7]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date9"
-                    label="{{$last_two_weeks[8]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date10"
-                    label="{{$last_two_weeks[9]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date11"
-                    label="{{$last_two_weeks[10]}}">
-            </el-table-column>
-            <el-table-column
-                    prop="date12"
-                    label="{{$last_two_weeks[11]}}">
-            </el-table-column>
-        </el-table>
-    </el-row>
-    </br>
-    <el-row>
-        <div>产值最高TOP3</div>
-        <el-table
-                :data="data"
-                border
-                stripe
-                style="width: 100%">
-            <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="markNum"
-                    label="标注量"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="days"
-                    label="标注天数">
-            </el-table-column>
-        </el-table>
-    </el-row>
-    </br>
-    <el-row>
-        <div>产值最低TOP3</div>
-        <el-table
-                :data="data"
-                border
-                stripe
-                style="width: 100%">
-            <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="markNum"
-                    label="标注量"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="days"
-                    label="标注天数">
-            </el-table-column>
-        </el-table>
-    </el-row>
-    </br>
-    <el-row>
-        <el-form :label-position="right" label-width="350px">
-            <el-form-item label="项目当前收入（入库量*项目单价）:">
-                XXX
-            </el-form-item>
-            <el-form-item label="项目当前最大收入（所有已标注量*项目单价）:">
-                XXX
-            </el-form-item>
-            <el-form-item label="项目当前最大收入（所有已标注量*项目单价）:">
-                XXX
-            </el-form-item>
-            <el-form-item label="项目当前最大收入（所有已标注量*项目单价）:">
-                XXX
-            </el-form-item>
-            <el-form-item label="项目当前最大收入（所有已标注量*项目单价）:">
-                XXX
-            </el-form-item>
-            <el-form-item label="项目当前最大收入（所有已标注量*项目单价）:">
-                XXX
-            </el-form-item>
-        </el-form>
-    </el-row>
+    标注进度：
+    <div>{{$label_progress}}</div>
+</div>
+<div class="progress" style="height:20px;">
+    <div class="progress-bar" style="width:{{$label_progress}};"></div>
+</div>
+</br>
+审核进度：
+<div>{{$check_progress}}</div>
+<div class="progress" style="height:20px;">
+    <div class="progress-bar" style="width:{{$label_progress}};"></div>
+</div>
+</br>
+<el-row>
+    <div>标注量/天</div>
+    <el-table
+            :data="daily_total"
+            border
+            stripe
+            style="width: 100%">
+        <el-table-column
+                prop="name"
+                label="标注量/天"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="date1"
+                label="{{$last_two_weeks[0]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date2"
+                label="{{$last_two_weeks[1]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date3"
+                label="{{$last_two_weeks[2]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date4"
+                label="{{$last_two_weeks[3]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date5"
+                label="{{$last_two_weeks[4]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date6"
+                label="{{$last_two_weeks[5]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date7"
+                label="{{$last_two_weeks[6]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date8"
+                label="{{$last_two_weeks[7]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date9"
+                label="{{$last_two_weeks[8]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date10"
+                label="{{$last_two_weeks[9]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date11"
+                label="{{$last_two_weeks[10]}}">
+        </el-table-column>
+        <el-table-column
+                prop="date12"
+                label="{{$last_two_weeks[11]}}">
+        </el-table-column>
+    </el-table>
+</el-row>
+</br>
+<el-row>
+    <div>产值最高TOP3</div>
+    <el-table
+            :data="top3"
+            border
+            stripe
+            style="width: 100%">
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="label_total"
+                label="标注量"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="label_days"
+                label="标注天数">
+        </el-table-column>
+    </el-table>
+</el-row>
+</br>
+<el-row>
+    <div>产值最低TOP3</div>
+    <el-table
+            :data="bottom3"
+            border
+            stripe
+            style="width: 100%">
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="label_total"
+                label="标注量"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="label_days"
+                label="标注天数">
+        </el-table-column>
+    </el-table>
+</el-row>
+</br>
+<el-row>
+    <el-form :label-position="right" label-width="350px">
+        <el-form-item label="项目当前收入:">
+            {{$revenue_data['current_total_income']}}
+        </el-form-item>
+        <el-form-item label="项目当前最大收入:">
+            {{$revenue_data['current_total_income_max']}}
+        </el-form-item>
+        <el-form-item label="标注总人天数:">
+            {{$revenue_data['label_total_user_day']}}
+        </el-form-item>
+        <el-form-item label="审核总人天数:">
+            {{$revenue_data['check_total_user_day']}}
+        </el-form-item>
+        <el-form-item label="标注基础成本支出:">
+            {{$revenue_data['label_base_cost']}}
+        </el-form-item>
+        <el-form-item label="审核基础成本支出:">
+            {{$revenue_data['check_base_cost']}}
+        </el-form-item>
+        <el-form-item label="标注绩效支出:">
+            {{$revenue_data['label_performance_cost']}}
+        </el-form-item>
+        <el-form-item label="审核绩效支出:">
+            {{$revenue_data['check_performance_cost']}}
+        </el-form-item>
+        <el-form-item label="项目当前收益:">
+            {{$revenue_data['current_revenue']}}
+        </el-form-item>
+        <el-form-item label="项目当前最大可能收益:">
+            {{$revenue_data['current_revenue_max']}}
+        </el-form-item>
+        <el-form-item label="项目潜在标注绩效成本:">
+            {{$revenue_data['label_potential_cost']}}
+        </el-form-item>
+        <el-form-item label="项目潜在审核绩效成本:">
+            {{$revenue_data['check_potential_cost']}}
+        </el-form-item>
+        <el-form-item label="剩余标注人天数:">
+            {{$revenue_data['surplus_label_user_day']}}
+        </el-form-item>
+        <el-form-item label="剩余审核人天数:">
+            {{$revenue_data['surplus_check_user_day']}}
+        </el-form-item>
+        <el-form-item label="剩余标注基础成本:">
+            {{$revenue_data['surplus_label_base_cost']}}
+        </el-form-item>
+        <el-form-item label="剩余审核基础成本:">
+            {{$revenue_data['surplus_check_base_cost']}}
+        </el-form-item>
+        <el-form-item label="项目预计最终收益:">
+            {{$revenue_data['project_estimated_finial_revenue']}}
+        </el-form-item>
+    </el-form>
+</el-row>
 </div>
 </body>
 <script>
     new Vue({
         el: '#app',
-        data: function() {
+        data: function () {
             return {
                 visible: false,
-                projectData1:[{!!json_encode($project_data)!!} ],
+                projectData1: [{!!json_encode($project_data)!!} ],
                 // projectData:[{name:'张三',startDate:'2019-10-10',endDate:'2019-10-10',price:'100',yesterdayMarkProduce:'100',yesterdayCheckProduce:'100',markBase:'10',checkBase:'10',yesterdayMarkDayAvg:'100',yesterdayMarkDayMax:'100'} ],
-                data:[{name:'员工A',markNum:'100',days:'100'},{name:'员工B',markNum:'100',days:'100'},{name:'员工C',markNum:'100',days:'100'}],
+                top3:{!!json_encode($top3)!!} ,
+                bottom3:{!!json_encode($bottom3)!!},
                 daily_total:{!!json_encode($daily_total_format)!!}
             }
         }
