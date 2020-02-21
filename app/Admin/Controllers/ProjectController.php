@@ -274,45 +274,57 @@ class ProjectController extends AdminController
         //项目潜在审核绩效成本
         $check_potential_cost = ($project_data['estimated_count'] - $check_sum) * $project_data['label_unit_price'];
         //剩余标注人天数
-        $last_label_date = UserProjectDay::where(['project_id' => $id])->where('daily_label','>',0)->orderBy('date', 'desc')->first()->date;
+        $last_label = UserProjectDay::where(['project_id' => $id])->where('daily_label', '>', 0)->orderBy('date', 'desc')->first();
+        if (!empty($last_label)) {
+            $last_label_date = $last_label->date;
+        }
         $last_avg_label_user_day = UserProjectDay::where(['project_id' => $id, 'date' => $last_label_date])->avg('daily_label');
         $surplus_label_user_day = ($project_data['estimated_count'] - array_sum($employee_performance)) / $last_avg_label_user_day;
         //剩余审核人天数
-        $last_check_date = UserProjectDay::where(['project_id' => $id])->where('daily_check','>',0)->orderBy('date', 'desc')->first()->date;
-        $last_avg_check_user_day = UserProjectDay::where(['project_id' => $id, 'date' => $last_check_date])->avg('daily_label');
-        $surplus_check_user_day = ($project_data['estimated_count'] -  $check_sum) / $last_avg_check_user_day;
-        //剩余标注基础成本
-        $surplus_label_base_cost=$surplus_label_user_day * 76;
-        //剩余审核基础成本
-        $surplus_check_base_cost=$surplus_check_user_day * 96;
-        //项目预计最终收益
-        $project_estimated_finial_revenue=$current_revenue-$surplus_label_base_cost-$surplus_check_base_cost;
+        $last_check = UserProjectDay::where(['project_id' => $id])->where('daily_check', '>', 0)->orderBy('date', 'desc')->first();
+        if (!empty($last_check)) {
+            $last_check_date = $last_check->date;
+            $last_avg_check_user_day = UserProjectDay::where(['project_id' => $id, 'date' => $last_check_date])->avg('daily_label');
+            $surplus_check_user_day = ($project_data['estimated_count'] - $check_sum) / $last_avg_check_user_day;
+            //剩余标注基础成本
+            $surplus_label_base_cost = $surplus_label_user_day * 76;
+            //剩余审核基础成本
+            $surplus_check_base_cost = $surplus_check_user_day * 96;
+            //项目预计最终收益
+            $project_estimated_finial_revenue = $current_revenue - $surplus_label_base_cost - $surplus_check_base_cost;
+
+        } else {
+            $surplus_check_user_day = 'no data';
+            $surplus_label_base_cost='no data';
+            $project_estimated_finial_revenue='no data';
+            $surplus_check_base_cost='no data';
+        }
 
 
-        $revenue_data=[
-            'current_total_income'=>$current_total_income,
-            'current_total_income_max'=>$current_total_income_max,
-            'label_total_user_day'=> $label_total_user_day,
-            'check_total_user_day'=>$check_total_user_day,
-            'label_base_cost'=>$label_base_cost,
-            'check_base_cost'=>$check_base_cost,
-            'label_performance_cost'=>$label_performance_cost,
-            'check_performance_cost'=>$check_performance_cost,
-            'current_revenue'=>$current_revenue,
-            'current_revenue_max'=>$current_revenue_max,
-            'label_potential_cost'=>$label_potential_cost,
-            'check_potential_cost'=>$check_potential_cost,
-            'surplus_label_user_day'=>$surplus_label_user_day,
-            'surplus_check_user_day'=>$surplus_check_user_day,
-            'surplus_label_base_cost'=>$surplus_label_base_cost,
-            'surplus_check_base_cost'=>$surplus_check_base_cost,
-            'project_estimated_finial_revenue'=>$project_estimated_finial_revenue,
+        $revenue_data = [
+            'current_total_income' => $current_total_income,
+            'current_total_income_max' => $current_total_income_max,
+            'label_total_user_day' => $label_total_user_day,
+            'check_total_user_day' => $check_total_user_day,
+            'label_base_cost' => $label_base_cost,
+            'check_base_cost' => $check_base_cost,
+            'label_performance_cost' => $label_performance_cost,
+            'check_performance_cost' => $check_performance_cost,
+            'current_revenue' => $current_revenue,
+            'current_revenue_max' => $current_revenue_max,
+            'label_potential_cost' => $label_potential_cost,
+            'check_potential_cost' => $check_potential_cost,
+            'surplus_label_user_day' => $surplus_label_user_day,
+            'surplus_check_user_day' => $surplus_check_user_day,
+            'surplus_label_base_cost' => $surplus_label_base_cost,
+            'surplus_check_base_cost' => $surplus_check_base_cost,
+            'project_estimated_finial_revenue' => $project_estimated_finial_revenue,
 
         ];
 
 
 //         // 直接渲染视图输出，Since v1.6.12
-        $content->view('projectdetail', ['project_data' => $project_data, 'time_progress' => $time_progress, 'label_progress' => $label_progress, 'check_progress' => $check_progress, 'last_two_weeks' => $last_two_weeks, 'daily_total_format' => $daily_total_format, 'top3' => $top3_fommat, 'bottom3' => $bottom3_fommat,'revenue_data'=>$revenue_data]);
+        $content->view('projectdetail', ['project_data' => $project_data, 'time_progress' => $time_progress, 'label_progress' => $label_progress, 'check_progress' => $check_progress, 'last_two_weeks' => $last_two_weeks, 'daily_total_format' => $daily_total_format, 'top3' => $top3_fommat, 'bottom3' => $bottom3_fommat, 'revenue_data' => $revenue_data]);
 
         return $content;
     }
